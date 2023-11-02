@@ -27,7 +27,7 @@ public class AlbumServlet extends HttpServlet {
 
     private final DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
             .credentialsProvider(StaticCredentialsProvider.create(credentials))
-            .region(Region.US_WEST_2) // Modify this as per your AWS Region
+            .region(Region.US_WEST_2)
             .build();
 
     @Override
@@ -37,8 +37,6 @@ public class AlbumServlet extends HttpServlet {
         String title = req.getParameter("title");
         String year = req.getParameter("year");
         String image = req.getParameter("image");
-
-        // Assuming you'll store the image to an S3 bucket or some storage and then save the URL/reference here
 
         String albumID = UUID.randomUUID().toString();
 

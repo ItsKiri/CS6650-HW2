@@ -19,10 +19,9 @@ public class Client {
     private static AtomicInteger failedRequests = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException, IOException, ImageReadException {
-        // Extract arguments
         int threadGroupSize = Integer.parseInt(args[0]);
         int numThreadGroups = Integer.parseInt(args[1]);
-        int delay = Integer.parseInt(args[2]) * 1000;  // converted to milliseconds
+        int delay = Integer.parseInt(args[2]) * 1000;
         String IPAddr = args[3];
 
         File imageFile = new File("/Users/kirimoto/Desktop/hw2/java-client-generated/src/main/java/nmtb.png");
@@ -32,7 +31,6 @@ public class Client {
 
         csvWriter = new BufferedWriter(new FileWriter(CSV_FILE));
 
-        // Initialization phase
         CountDownLatch initLatch = new CountDownLatch(2);
         for (int i = 0; i < 2; i++) {
             Thread thread = new Thread(() -> {
@@ -45,14 +43,11 @@ public class Client {
             thread.start();
         }
 
-        // Wait for initialization threads to finish
         initLatch.await();
-
 
         CountDownLatch groupLatch = new CountDownLatch(threadGroupSize * numThreadGroups);
         long startTime = System.currentTimeMillis();
 
-        // Thread groups
         for (int i = 0; i < numThreadGroups; i++) {
             for (int j = 0; j < threadGroupSize; j++) {
                 Thread thread = new Thread(() -> {
